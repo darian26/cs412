@@ -1,0 +1,13 @@
+<!-- hw/templates/hw/home.html -->
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+<div class="quote-section">
+    <div class="quote-container">
+        <h2 class="quote-text">{{quote_src}}</h2>
+        <div class="quote-image-container">
+            <img src="{{image_src}}" alt="Quote Image" class="quote-image">
+        </div>
+    </div>
+</div>
+{% endblock %}

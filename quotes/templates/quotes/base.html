@@ -1,0 +1,29 @@
+<!-- hw/templates/hw/base.html 
+ This is base page from which all other pages will inherit.
+ Put common code here, specific code in separate pages
+ -->
+ {% load static %}
+<html>
+    <head>
+        <title>Sun Tzu Quotes!</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
+    <body>
+
+    <nav>
+        <ul>
+            <!-- <a href="/hw/">Home</a> -->
+            <!-- <a href="/hw/about">About</a> -->
+             <!-- use the scriptlet URL function to look up a URL by name -->
+            <a href="{% url 'quote' %}">Quote of the Day</a>
+            <a href="{% url 'show_all' %}">Show all</a>
+            <a href="{% url 'about' %}">About</a>
+        </ul>
+    </nav>
+    <h1 style="text-align: center;">Welcome to Sun Tzu's Quote of the Day!</h1>
+
+    {% block content %}
+    <!-- put the interesting (specific stuff) here -->
+    {% endblock %}
+    </body>
+</html>

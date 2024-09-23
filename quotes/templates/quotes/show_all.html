@@ -1,0 +1,22 @@
+<!-- hw/templates/hw/home.html -->
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+<div class="quotes-section">
+    <h2>All Quotes</h2>
+    <ul class="quote-list">
+        {% for quote in quote_list %}
+            <li class="quote-item">{{quote}}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="images-section">
+    <h2>All Sun Tzu Images</h2>
+    <div class="image-grid">
+        {% for image in image_list %}
+            <img src="{{ image }}" alt="Image" class="sun-tzu-image">
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
