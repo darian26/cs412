@@ -11,7 +11,14 @@
        <p>
            Your contact info is Email: {{email}}, Phone Number: {{phone}}
        </p>
+       <h3>Your Order is: </h3>
+       <ul class="order-list">
+        {% for order in food %}
+            <li class="food-item">{{order}}</li>
+        {% endfor %}
+        </ul>
        <h4>Special Instructions: {{special_instructions}}</h4>
+       <p>Your order will be ready at: {{time}}</p>
    </div>
 
 

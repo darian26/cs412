@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
-import time
+from datetime import datetime, timedelta
 import random
 
 # Create your views here.
@@ -40,19 +40,20 @@ def confirmation(request):
             "email": email,
             "special_instructions": special_instructions
         }
+        instruction_index = -1
+        keys_list = list(request.POST.keys())
+        for index, key in enumerate(keys_list):
+            if key == 'special_instructions':
+                instruction_index = index
+                break
+        context["food"] = keys_list[1:instruction_index]
+
+        current_time = datetime.now()
+        minutes = random.randint(30, 60)
+        new_time = current_time + timedelta(minutes=minutes)
+        formatted_time = new_time.strftime('%Y-%m-%d %H:%M:%S')
+        context['time'] = formatted_time
+
         return render(request, template_name, context)
-
-    ## GET lands down here: no return statements!
-
-    # this is an OK solution: a graceful failure
-    # return HttpResponse("Nope.")
-
-    # if the client got here by making a GET on this URL, send back the form
-    # use this template to produce the response
-
-    # this is a "better solution", but shows the wrong URL
-    # template_name = 'formdata/form.html'
-    # return render(request, template_name)
-
-    # this is the "best" solution: redirect to the correct URL
+    
     return redirect("order")
