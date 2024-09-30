@@ -1,0 +1,40 @@
+<!-- hw/templates/hw/about.html -->
+{% extends 'restaurant/base.html' %}
+
+{% block content %}
+<h2 class="place-order">Place an Order</h2>
+<div class="order-container">
+        <form action="{% url 'confirmation' %}" method="POST">
+            {% csrf_token %}
+            <p>
+            <h3>Select your Items:</h3>
+            <div><input type="checkbox" name="Tonkotsu Ramen">Tonkotsu Ramen $15.95</div>
+            <div><input type="checkbox" name="Spicy Tonkotsu Ramen">Spicy Tonkotsu Ramen $15.95</div>
+            <div><input type="checkbox" name="Miso Ramen">Miso Ramen $16.95</div>
+            <div><input type="checkbox" name="Shrimp Fried Rice">Shrimp Fried Rice $14.95</div>
+            </p>
+            <p>
+            <h3>Today's Special:</h3>
+            <div><input type="checkbox" name="Special">Tonkotsu Ramen Mega Bowl $25.95</div>
+            </p>
+            <p>
+            <h3>Special Instructions</h3>
+            Please share any special instructions:
+            <div><textarea name="special_instructions" rows="3" cols="60"></textarea></div>
+            </p>
+            <p>
+            <h3>Customer Information</h3>
+            <div>Name:</div> <div><input name="name"></div>
+            <div>Phone:</div> <div><input name="phone"></div>
+            <div>Email:</div> <div><input name="email"></div>
+            </p>
+            <p>
+            <h3>Place your order!</h3>
+            <input type="submit">
+            </p>
+        </form>
+        <div class="order-images">
+            <img src="https://static.wixstatic.com/media/ac2bd4_702510f332b745af9667096eb50e7e29~mv2.jpg/v1/fit/w_2500,h_1330,al_c/ac2bd4_702510f332b745af9667096eb50e7e29~mv2.jpg">
+        </div>
+</div>
+{% endblock %}

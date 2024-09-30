@@ -155,3 +155,43 @@ a {
     object-fit: cover;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+.kyuramen-container {
+    width: 100vw;
+    height: 90vh;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.kyuramen-content {
+    width: 80vw;
+    height: 70vh;
+    display: grid;
+    grid-template-rows: 10% 90%;
+}
+
+.kyuramen-text h2 {
+    text-align: center;
+}
+
+.kyuramen-image {
+    width: 100%;
+    height: 100%;
+}
+
+.order-container {
+    width: 50vw;
+    height: auto;
+    display: flex;
+    padding-left: 5vw;
+}
+
+.place-order {
+    padding-left: 5vw;
+}
+
+.order-images img {
+    width: 40vw;
+    height: 40vh;
+}
