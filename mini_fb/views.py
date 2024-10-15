@@ -32,13 +32,6 @@ class CreateProfileView(CreateView):
     form_class = CreateProfileForm
     template_name = "mini_fb/create_profile_form.html"
 
-    # what to do after form submission?
-    def get_success_url(self) -> str:
-        '''return the URL to redirect to after sucessful create'''
-        #return "/mini_fb/show_all"
-        #return reverse("show_all")
-        return reverse("show_all_profiles", kwargs=self.kwargs)
-
 class CreateStatusMessageView(CreateView):
     '''a view to show/process the create comment form:
     on GET: sends back the form
@@ -63,8 +56,8 @@ class CreateStatusMessageView(CreateView):
         # self.kwargs['pk'] is finding the article PK from the URL
         profile = Profile.objects.get(pk=self.kwargs['pk'])
 
-        # attach the profile to the new Comment 
-        # (form.instance is the new Comment object)
+        # attach the profile to the new stastus 
+        # (form.instance is the new status object)
         form.instance.profile = profile
 
         # delegaute work to the superclass version of this method
