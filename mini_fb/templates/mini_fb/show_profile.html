@@ -12,6 +12,9 @@
                 <h4>Name: {{profile.first_name}} {{profile.last_name}}</h4>
                 <h4>City: {{profile.city}}</h4>
                 <h4>Email: {{profile.email_address}}</h4>
+                <h4><a href="{% url 'create_status' profile.pk %}">
+                    Add a status message</a>
+                </h4>
             </div>
             
             
@@ -19,7 +22,7 @@
     
         <div>
             {% if profile.get_status_message %}
-                <h2>Comments</h2>
+                <h2>Status Message</h2>
                 <!-- call the Article's get_comments() method -->
                 <!-- {{article.get_comments}}  -->
             
