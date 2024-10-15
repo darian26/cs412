@@ -8,11 +8,12 @@
 <main class="grid-container"> <!-- was <div> -->
     {% for p in profiles %}
     <profile> <!-- was <div> -->
+        <a href="{% url 'profile' p.pk %}">
+            <img src="{{p.profile_image}}" alt="{{p.image_url}}">
+        </a>
         
-        <img src="{{p.profile_image}}" alt="{{p.image_url}}">
-
         <div> <!-- added this! -->
-            <h2>{{p.first_name}} {{p.last_name}}</h2>
+            <h2><a href="{% url 'profile' p.pk %}">{{p.first_name}} {{p.last_name}}</a></h2>
             <h3>{{p.city}}. Contact at {{p.email_address}}</h3>
         </div> <!-- added this! -->
  

@@ -1,0 +1,51 @@
+<!-- blog/templats/blog/profile.html -->
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+
+<main>
+        
+    <div class="main">
+        <profile class="featured">
+            <img src="{{profile.profile_image}}" alt="{{profile.profile_image}}">
+            <div>
+                <h4>Name: {{profile.first_name}} {{profile.last_name}}</h4>
+                <h4>City: {{profile.city}}</h4>
+                <h4>Email: {{profile.email_address}}</h4>
+            </div>
+            
+            
+        </profile>
+    
+        <div>
+            {% if profile.get_status_message %}
+                <h2>Comments</h2>
+                <!-- call the Article's get_comments() method -->
+                <!-- {{article.get_comments}}  -->
+            
+                {% for status in profile.get_status_message  %}
+                <div>
+                    <strong>by {{profile.first_name}} {{profile.last_name}} @ {{status.timestamp}} </strong>
+                    <p>
+                        {{status.text}}
+                    </p>
+    
+                </div>
+                {% endfor %}
+    
+            {% else %}
+                <div>
+                    <h2>No status message</h2>
+                </div>
+            {% endif %}
+    
+    
+        </div>
+    
+    </div>
+    
+    
+    
+</main>
+
+{% endblock %}
