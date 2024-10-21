@@ -40,4 +40,17 @@ class StatusMessage(models.Model):
     def __str__(self):
         '''Return a string representation of this StatusMessage object.'''
         return f'{self.text}'
-        
+
+
+    def get_images(self):
+        '''Return all of the images about this status message'''
+        images = Image.objects.filter(status_message=self)
+        return images
+
+class Image(models.Model):
+    image_file = models.ImageField(upload_to='images/')
+    status_message = models.ForeignKey(StatusMessage, on_delete=models.CASCADE)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Image for {self.status_message.text} uploaded at {self.uploaded_at}"

@@ -19,6 +19,7 @@
                 <h4><a href="{% url 'create_status' profile.pk %}">
                     Add a status message</a>
                 </h4>
+                <h4><a href="{% url 'update_profile' profile.pk %}" class="btn btn-warning">Update Profile</a></h4>
             </div>
             
             
@@ -36,7 +37,19 @@
                     <p>
                         {{status.text}}
                     </p>
+                          <!-- Display images associated with the status message -->
+                    {% if status.get_images %}
+                    <div class="status-images">
+                        {% for img in status.get_images %}
+                        <img src="{{ img.image_file.url }}" alt="Image for {{ c.message }}" style="max-width: 200px;">
+                        {% endfor %}
+                    </div>
+                    {% endif %}
     
+                </div>
+                <div>
+                    <a href="{% url 'update_status_message' status.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'delete_status_message' status.pk %}" class="btn btn-danger btn-sm">Delete</a>
                 </div>
                 {% endfor %}
     

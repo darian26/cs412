@@ -8,7 +8,7 @@
 
 <h2>Add a status message for {{profile.first_name}} {{profile.last_name}}</h2>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     <!-- display the form (context variable) -->
     <!-- {{form}} -->
 
@@ -18,11 +18,17 @@
     <table>
     {{form.as_table}}
 
+    <!-- Add file upload input for images -->
+    <tr>
+      <td><label for="files">Upload Images:</label></td>
+      <td><input type="file" name="files" id="files" multiple></td>
+    </tr>
+
     <tr>
         <td></td>
         <td>
             <!-- we need to add the submit button ourselves -->
-            <input type="submit" name="Create Status Message">
+            <input type="submit" value="Create Status Message">
             {% csrf_token %}
         </form>
         <!-- NOTE: this is a separate form! -->
