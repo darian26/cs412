@@ -26,6 +26,55 @@ class Profile(models.Model):
         status_message = status_message.order_by('-timestamp')
         return status_message
     
+    def get_friends(self):
+        '''
+        Return all friends related to a profile
+        '''
+        friends = Friend.objects.filter(models.Q(profile1=self) | models.Q(profile2=self))
+        friend_profiles = [
+            friend.profile2 if friend.profile1 == self else friend.profile1
+            for friend in friends
+        ]
+        return friend_profiles
+    
+    def add_friend(self, friend):
+        '''
+        Add a Friend relation between self and another Profile (friend)
+        ''' 
+        if self == friend:
+            return
+        existing_friend = Friend.objects.filter(
+            models.Q(profile1=self, profile2=friend) | models.Q(profile1=friend, profile2=self)
+        ).exists()
+        if not existing_friend:
+            Friend.objects.create(profile1=self, profile2=friend)
+
+    def get_friend_suggestions(self):
+        '''
+        Return a list of possible friends for this Profile.
+        '''
+        all_profiles = Profile.objects.exclude(id=self.id)
+        print(f"All Profiles (excluding self): {[profile.id for profile in all_profiles]}")
+        friends = Friend.objects.filter(
+            models.Q(profile1=self) | models.Q(profile2=self)
+        ).values_list('profile1', 'profile2')
+        friend_ids = set()
+        for profile1_id, profile2_id in friends:
+            if profile1_id != self.id:
+                friend_ids.add(profile1_id)
+            if profile2_id != self.id:
+                friend_ids.add(profile2_id)
+        suggestions = all_profiles.exclude(id__in=friend_ids)
+        return suggestions
+    
+    def get_news_feed(self):
+        ''' Return a QuerySet of StatusMessages for the profile and all their friends '''
+        own_status = StatusMessage.objects.filter(profile=self)
+        friends = self.get_friends()
+        friend_status = StatusMessage.objects.filter(profile__in=friends)
+        news_feed = own_status.union(friend_status).order_by('-timestamp')
+        return news_feed
+    
     def get_absolute_url(self):
         return reverse('profile', kwargs={'pk': self.pk})
     
@@ -54,3 +103,10 @@ class Image(models.Model):
 
     def __str__(self):
         return f"Image for {self.status_message.text} uploaded at {self.uploaded_at}"
+    
+class Friend(models.Model):
+    profile1 = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="profile1")
+    profile2 = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='profile2')
+    timestamp = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"{self.profile1.first_name} {self.profile1.last_name} & {self.profile2.first_name} {self.profile2.last_name} " 

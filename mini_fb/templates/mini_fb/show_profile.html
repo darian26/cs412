@@ -58,9 +58,26 @@
                     <h2>No status message</h2>
                 </div>
             {% endif %}
-    
-    
         </div>
+        <h2> Show News Feed </h2>
+        <a href="{% url 'news_feed' pk=profile.pk %}">View News Feed</a>
+        <h2>Friends</h2>
+        {% if profile.get_friends %}
+            <div>
+                {% for friend in profile.get_friends %}
+                    <div class="friend-card">
+                        <a href="{{ friend.url }}">
+                            <img src="{{ friend.profile_image }}" alt="{{ friend.first_name }}'s profile image">
+                            <p>{{ friend.first_name }} {{ friend.last_name }}</p>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No friends available for this profile.</p>
+        {% endif %}
+         <h2> Friend Suggestions </h2>
+        <a href="{% url 'friend_suggestions' pk=profile.pk %}">View Friend Suggestions</a>
     
     </div>
     

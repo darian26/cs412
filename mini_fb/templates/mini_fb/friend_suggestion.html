@@ -1,0 +1,21 @@
+{% block content %}
+<h2>Friend Suggestions for {{ profile.first_name }} {{ profile.last_name }}</h2>
+{% if friend_suggestions %}
+    <div>
+        {% for suggestion in friend_suggestions %}
+            <div>
+                <a href="{% url 'profile' pk=suggestion.pk %}">
+                    <img src="{{ suggestion.profile_image }}" alt="{{ suggestion.first_name }}'s profile image">
+                    <p>{{ suggestion.first_name }} {{ suggestion.last_name }}</p>
+                </a>
+                <form action="{% url 'add_friend' pk=profile.pk other_pk=suggestion.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Add Friend</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No friend suggestions available.</p>
+{% endif %}
+{% endblock %}
