@@ -147,7 +147,7 @@ class CreateFriendView(View):
 class ShowFriendSuggestionsView(DetailView):
     ''' A view to see friend suggestions '''
     model = Profile
-    template_name = 'mini_fb/friend_suggestion.html'
+    template_name = 'mini_fb/friend_suggestions.html'
     context_object_name = 'profile'
 
     def get_context_data(self, **kwargs):
