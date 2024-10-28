@@ -63,11 +63,11 @@
         <a href="{% url 'news_feed' pk=profile.pk %}">View News Feed</a>
         <h2>Friends</h2>
         {% if profile.get_friends %}
-            <div>
+            <div style="display: flex;">
                 {% for friend in profile.get_friends %}
-                    <div class="friend-card">
+                    <div style="padding-right: 15px;">
                         <a href="{{ friend.url }}">
-                            <img src="{{ friend.profile_image }}" alt="{{ friend.first_name }}'s profile image">
+                            <img src="{{ friend.profile_image }}" alt="{{ friend.first_name }}'s profile image" style="width: 100px; height: 100px; border-radius: 45%;">
                             <p>{{ friend.first_name }} {{ friend.last_name }}</p>
                         </a>
                     </div>
