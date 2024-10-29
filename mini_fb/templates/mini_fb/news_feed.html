@@ -4,7 +4,7 @@
 {% if news_feed %}
     <div>
         {% for status in news_feed %}
-            <div>
+            <div style="border-style: solid; padding-bottom: 5px;">
                 <div>
                     <img src="{{ status.profile.profile_image }}" alt="{{ status.profile.first_name }}'s profile image" style="width: 300px; height: 250px;">
                     <p><strong>{{ status.profile.first_name }} {{ status.profile.last_name }}</strong></p>

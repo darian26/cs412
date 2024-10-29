@@ -128,17 +128,14 @@ class CreateFriendView(View):
     ''' A view that allows a user to add a friend '''
     def dispatch(self, request, *args, **kwargs):
         if request.method.lower() == 'post':
-            return self.post(request, *args, **kwargs)
-        return self.http_method_not_allowed(request, *args, **kwargs)
-    
-    def post(self, request, *args, **kwargs):
-        profile_pk = kwargs.get('pk')
-        other_pk = kwargs.get('other_pk')
-        profile = Profile.objects.get(pk=profile_pk)
-        other_profile = Profile.objects.get(pk=other_pk)
+            profile_pk = kwargs.get('pk')
+            friend_pk = kwargs.get('other_pk')
+            profile = Profile.objects.get(pk=profile_pk)
+            other_profile = Profile.objects.get(pk=friend_pk)
 
-        profile.add_friend(other_profile)
-        return HttpResponseRedirect(self.get_success_url(profile.pk))
+            profile.add_friend(other_profile)
+            return HttpResponseRedirect(self.get_success_url(profile.pk))
+        return self.http_method_not_allowed(request, *args, **kwargs)
     
     def get_success_url(self, pk):
         ''' Return the URL to redirect to after adding a friend '''
@@ -170,5 +167,4 @@ class ShowNewsFeedView(DetailView):
         context = super().get_context_data(**kwargs)
         profile = self.get_object()
         context['news_feed'] = profile.get_news_feed()
-        context['current_profile'] = profile
         return context
