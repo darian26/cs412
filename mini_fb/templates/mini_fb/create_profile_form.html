@@ -11,11 +11,21 @@
 <form method="POST">
     <!-- CSRF token for security -->
     {% csrf_token %}
-
+    <h2>User Registration</h2>
     <!-- Render the form as a table -->
     <table>
-        {{ form.as_table }}
+        {{ user_form.as_table }}
     </table>
+    <h2>Profile Creation</h2>
+    <table>
+        {{ form.as_table }} 
+    </table>
+    <tr>
+        <td></td>
+        <td>
+            <input type="submit" value="Create Profile">
+        </td>
+    </tr>
 
     <!-- Submit button -->
     <button type="submit">Create Profile</button>

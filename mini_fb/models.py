@@ -4,11 +4,14 @@ mini_fb/models.py
 Define the data objects for our application
 '''
 from django.db import models
-from django.urls import reverse ## NEW
+from django.urls import reverse
+from django.contrib.auth.models import User
 
 class Profile(models.Model):
     '''Encapsulate the idea of an Profile by some user.'''
     # data attributes of a Article:
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
     first_name = models.TextField(blank=False)
     last_name = models.TextField(blank=False)
     city = models.TextField(blank=False)
