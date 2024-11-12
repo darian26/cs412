@@ -11,10 +11,11 @@
     <link rel="stylesheet" href="{% static 'voter_styles.css' %}">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Voter Data Graphs</h1>
-        </header>
+    <header class="header">
+        <h1>Voter Data Graphs</h1>
+        <a href="{% url 'voters' %}" class="graphs-link">View Voter List</a>
+    </header>
+    <main>
 
         <!-- Filter Form -->
         <form method="get" action="{% url 'graphs' %}" class="filter-form">
@@ -74,9 +75,6 @@
         <div class="graph" id="birth-year-histogram">{{ birth_year_histogram|safe }}</div>
         <div class="graph" id="party-affiliation-pie">{{ party_affiliation_pie|safe }}</div>
         <div class="graph" id="election-participation-histogram">{{ election_participation_histogram|safe }}</div>
-
-        <!-- Navigation link to Voter List -->
-        <p><a href="{% url 'voters' %}" class="back-link">Back to Voter List</a></p>
-    </div>
+    </main>
 </body>
 </html>
