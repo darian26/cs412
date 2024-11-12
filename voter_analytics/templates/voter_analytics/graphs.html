@@ -1,0 +1,82 @@
+<!-- Author: Darian Cheung -->
+<!-- Email: darian26@bu.edu -->
+<!-- graphs template for html files -->
+<!-- templates/graphs.html -->
+<!-- mini_fb/templates/mini_fb/graphs.html -->
+
+{% load static %}
+<html>
+<head>
+    <title>Voter Data Graphs</title>
+    <link rel="stylesheet" href="{% static 'voter_styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Voter Data Graphs</h1>
+        </header>
+
+        <!-- Filter Form -->
+        <form method="get" action="{% url 'graphs' %}" class="filter-form">
+            <fieldset>
+                <legend>Filter Voters</legend>
+
+                <!-- Party Affiliation Filter -->
+                <label for="party">Party Affiliation:</label>
+                <select name="party_affiliation" id="party">
+                    <option value="">-- Select Party Affiliation --</option>
+                    {% for affiliation in party_affiliations %}
+                    <option value="{{ affiliation }}">{{ affiliation }}</option>
+                    {% endfor %}
+                </select>
+                
+                <!-- Date of Birth Filters -->
+                <label for="min_dob">Min Date of Birth:</label>
+                <select name="min_dob" id="min_dob">
+                    <option value="">-- Select Minimum Year --</option>
+                    {% for year in years %}
+                    <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="max_dob">Max Date of Birth:</label>
+                <select name="max_dob" id="max_dob">
+                    <option value="">-- Select Maximum Year --</option>
+                    {% for year in years %}
+                    <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+
+                <!-- Voter Score Filter -->
+                <label for="score">Voter Score:</label>
+                <select name="voter_score" id="score">
+                    <option value="">-- Select Voter Score --</option>
+                    {% for score in voter_scores %}
+                    <option value="{{ score }}">{{ score }}</option>
+                    {% endfor %}
+                </select>
+
+                <!-- Specific Elections Filter -->
+                <div class="checkbox-group">
+                    <label>Specific Elections:</label>
+                    <label><input type="checkbox" name="v20_state" value="true"> Voted in 2020 State</label>
+                    <label><input type="checkbox" name="v21_town" value="true"> Voted in 2021 Town</label>
+                    <label><input type="checkbox" name="v21_primary" value="true"> Voted in 2021 Primary</label>
+                    <label><input type="checkbox" name="v22_general" value="true"> Voted in 2022 General</label>
+                    <label><input type="checkbox" name="v23_town" value="true"> Voted in 2023 Town</label>
+                </div>
+
+                <button type="submit">Apply Filters</button>
+            </fieldset>
+        </form>
+
+        <!-- Graphs -->
+        <div class="graph" id="birth-year-histogram">{{ birth_year_histogram|safe }}</div>
+        <div class="graph" id="party-affiliation-pie">{{ party_affiliation_pie|safe }}</div>
+        <div class="graph" id="election-participation-histogram">{{ election_participation_histogram|safe }}</div>
+
+        <!-- Navigation link to Voter List -->
+        <p><a href="{% url 'voters' %}" class="back-link">Back to Voter List</a></p>
+    </div>
+</body>
+</html>

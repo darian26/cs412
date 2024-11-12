@@ -1,0 +1,102 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: rgb(0, 221, 255);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+main {
+    padding: 2rem;
+}
+
+.filter-form {
+    margin-bottom: 2rem;
+}
+
+.filter-form fieldset {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.filter-form label {
+    display: block;
+    margin: 0.5rem 0;
+}
+
+.filter-form select,
+.filter-form button {
+    margin-top: 0.5rem;
+    padding: 0.4rem;
+    width: 100%;
+}
+
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.voter-table-section {
+    margin-top: 2rem;
+}
+
+.voter-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.voter-table th, .voter-table td {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.voter-table th {
+    background-color: #f2f2f2;
+}
+
+.voter-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.voter-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.next_page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.next_page a {
+    padding: 0.5rem 1rem;
+    color: rgb(0, 221, 255);
+    text-decoration: none;
+    border: 1px solid rgb(0, 221, 255);
+    border-radius: 5px;
+}
+
+.next_page a:hover {
+    background-color: rgb(0, 221, 255);
+    color: white;
+}
+
+.next_page span {
+    font-weight: bold;
+}
+
