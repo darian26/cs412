@@ -1,0 +1,45 @@
+{% extends 'project/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="events-container">
+  <!-- User's Created Events -->
+  <div class="user-events">
+    <h2>Your Hosted Events!</h2>
+    {% if user_events %}
+      <ul>
+        {% for event in user_events %}
+          <li>
+            <a href="{% url 'event_detail' event.id %}">
+              <h3>{{ event.title }}</h3>
+            </a><br>
+            {{ event.description|truncatechars:100 }}<br>
+            <small>{{ event.date_time|date:"M d, Y H:i" }}</small>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>You haven't created any events yet.</p>
+      <a href="{% url 'create_event' %}" class="btn create-event-btn" style="color: white">Create an Event</a>
+    {% endif %}
+  </div>
+
+  <!-- All Other Events -->
+  <div class="all-events-grid">
+    {% if all_events %}
+      {% for event in all_events %}
+        <div class="event-card">
+          <a href="{% url 'event_detail' event.id %}">
+            <h3>{{ event.title }}</h3>
+          </a>
+          <p>{{ event.description|truncatechars:100 }}</p>
+          <p><h3>Location:</h3> {{ event.location }}</p>
+          <p><h3>Date:</h3> {{ event.date_time|date:"M d, Y H:i" }}</p>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No events found.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

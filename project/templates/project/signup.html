@@ -1,0 +1,37 @@
+<!-- Author: Darian Cheung -->
+<!-- Email: darian26@bu.edu -->
+<!-- template for creating profile form -->
+<!-- templates/create_profile_form.html -->
+<!-- project/templates/mini_fb/create_profile_form.html -->
+{% extends 'project/base.html' %}
+{% block content %}
+
+<h1>Create a Profile</h1>
+
+<form method="POST">
+    <!-- CSRF token for security -->
+    {% csrf_token %}
+    <h2>User Registration</h2>
+    <!-- Render the form as a table -->
+    <table>
+        {{ user_form.as_table }}
+    </table>
+    <br>
+    <h2>Account Creation</h2>
+    <table>
+        {{ form.as_table }} 
+    </table>
+    <tr>
+        <td></td>
+    </tr>
+
+    <!-- Submit button -->
+    <button type="submit">Create Account</button>
+
+    <!-- Cancel button - redirects to profile list or home page -->
+    <a href="{% url 'project_login' %}">
+        <button type="button">Cancel</button>
+    </a>
+</form>
+
+{% endblock %}

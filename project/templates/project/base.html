@@ -1,0 +1,32 @@
+<!-- Author: Darian Cheung -->
+<!-- Email: darian26@bu.edu -->
+<!-- base template for html files -->
+<!-- templates/base.html -->
+<!-- project/templates/project/base.html -->
+{% load static %}
+<html>
+  <head>
+    <title>Eventful</title>
+    <link rel="stylesheet" href="{% static 'eventful.css' %}" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="{% url 'project_homepage' %}">Eventful</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'create_event' %}">Create Event</a></li>
+          <li>
+            <form method="POST" action="{% url 'project_logout' %}">
+            {% csrf_token %}
+            <input type="submit" value="Logout">
+            </form>
+          </li>
+        {% else %}
+          <li><a href="{% url 'project_login' %}">Login</a></li>
+          <li><a href="{% url 'project_signup' %}">Sign Up</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% block content %} {% endblock %}
+  </body>
+</html>
