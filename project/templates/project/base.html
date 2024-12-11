@@ -12,9 +12,11 @@
   <body>
     <nav>
       <ul>
-        <li><a href="{% url 'project_homepage' %}">Eventful</a></li>
+        <li><a href="{% url 'project_homepage' %}" style="font-size: 30px; font-family: cursive;">Eventful</a></li>
         {% if user.is_authenticated %}
+        <li><a href="{% url 'registered_events' %}">My Registered Events</a></li>
         <li><a href="{% url 'create_event' %}">Create Event</a></li>
+        <li><a href="{% url 'update_profile' %}">Update Profile</a></li>
           <li>
             <form method="POST" action="{% url 'project_logout' %}">
             {% csrf_token %}

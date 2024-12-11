@@ -1,0 +1,39 @@
+<!-- Author: Darian Cheung -->
+<!-- Email: darian26@bu.edu -->
+<!-- template for showing profile -->
+<!-- templates/show_all_profiles.html -->
+<!-- project/templats/project/show_profile.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<main class="profile-page">
+  <div class="profile-container">
+    <div class="profile-header">
+      <img src="{{profile.profile_pfp}}" alt="{{profile.first_name}} {{profile.last_name}}" class="profile-picture">
+      <h1 class="profile-name">{{profile.first_name}} {{profile.last_name}}</h1>
+      <p class="profile-location">📍 {{profile.city}}</p>
+      <p class="profile-email">✉️ <a href="mailto:{{profile.email}}">{{profile.email}}</a></p>
+      {% if profile.user == request.user %}
+      <a href="{% url 'update_profile' %}" class="btn btn-primary">Update Profile</a>
+      {% endif %}
+    </div>
+
+    <div class="profile-events">
+      <h2>Hosted Events</h2>
+      {% if profile.get_hosted_events %}
+      <ul class="event-list">
+        {% for event in profile.get_hosted_events %}
+        <li class="event-item">
+          <a href="{% url 'event_detail' event.pk %}" class="event-link">{{event.title}}</a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="no-events">No hosted events to display.</p>
+      {% endif %}
+    </div>
+  </div>
+</main>
+
+{% endblock %}

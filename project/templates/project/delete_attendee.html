@@ -1,0 +1,20 @@
+<!-- blog/templates/blog/delete_comment_form.html -->
+{% extends 'project/base.html' %}
+{% block content %}
+<!-- templates/blog/delete_comment.html -->
+<div class="form-container">
+<h3>Are you sure you want to remove this attendee?</h3>
+{{eventRegistration.user.first_name}} {{eventRegistration.user.last_name}}
+<p>
+</p>
+<form method='POST'>
+    {% csrf_token %}
+    <input type='submit' name="Yes" value="Yes">
+</form>
+<form method='GET' action="{% url 'event_detail' eventRegistration.event.pk %}">
+    {% csrf_token %}
+    <input type='submit' name="No" value="No">
+</form>
+</div>
+
+{% endblock %}

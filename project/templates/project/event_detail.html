@@ -9,25 +9,74 @@
     <p><strong>Description:</strong> {{ event.description }}</p>
     <p><strong>Location:</strong> {{ event.location }}</p>
     <p><strong>Date and Time:</strong> {{ event.date_time|date:"M d, Y H:i" }}</p>
-    <p><strong>Capacity:</strong> {{ event.capacity }}</p>
+    <p><strong>Capacity:</strong> {{ capacity }}/{{ event.capacity }}</p>
+    {% if event.owner.user == request.user %}
+      <h4><a href="{% url 'delete_event' event.pk %}" class="btn btn-warning" style="color: black;">Delete Event</a></h4>
+      <h4><a href="{% url 'update_event' event.pk %}" class="btn btn-warning" style="color: black;">Update Event</a></h4>
+    {% endif %}
   </div>
 
-  <div class="event-owner">
-    <h3>Event Owner</h3>
-    <div class="owner-details">
-      <img src="{{ event.owner.profile_pfp }}" alt="{{ event.owner.username }}'s Profile Picture" class="owner-pfp">
-      <div class="owner-info">
-        <p><strong>{{ event.owner.first_name }} {{ event.owner.last_name }}</strong></p>
-        <p><small>{{ event.owner.user.username }}</small></p>
-      </div>
+    <div class="event-owner">
+      {% if current_event.owner.user == request.user %}
+      <a href="{% url 'project_profile' current_event.owner.pk %}" style="color: black;">
+      <h3>Event Owner (You)</h3>
+      </a>
+      {% endif %}
+      
+        <div class="owner-details">
+          <a href="{% url 'project_profile' current_event.owner.pk %}" style="color: black;">
+            <img src="{{ event.owner.profile_pfp }}" alt="{{ event.owner.username }}'s Profile Picture" class="owner-pfp">
+          </a>
+          <div class="owner-info">
+            <p><strong>Full Name: {{ event.owner.first_name }} {{ event.owner.last_name }}</strong></p>
+            <p><small>Username: {{ event.owner.user.username }}</small></p>
+          </div>
+        </div>
     </div>
-  </div>
-
-  {% if current_event not in registered_events %}
-  <!-- Register button -->
-  <a href="{% url 'event_register' pk=current_event.pk %}" class="btn-primary">Register For Event</a>
-{% endif %}
-
-
+  {% if current_event not in registered_events and current_event.owner.user != request.user %}
+    {% if not full %}
+    <!-- Register button -->
+      <a href="{% url 'event_register' pk=current_event.pk %}" class="btn-primary">Register For Event</a>
+    {% else %}
+      <a href="{% url 'event_waitlist' pk=current_event.pk %}" class="btn-primary">Join Waitlist</a>
+    {% endif %}
+  {% else %}
+    {% if current_event.owner.user == request.user %}
+      <ul class="attendee-list">
+        {% for attendee in current_event.get_attendees %}
+          <li class="attendee-item">
+            <a href="{% url 'project_profile' attendee.user.pk %}" style="color: black;">
+              <img src="{{ attendee.user.profile_pfp }}" alt="{{ attendee.user.first_name }}'s Profile Picture" class="attendee-pfp">
+              <div class="attendee-info">
+                <p class="attendee-name">Full Name: {{ attendee.user.first_name }} {{ attendee.user.last_name }}</p>
+                <p class="attendee-details">Age: {{ attendee.user.age }} | City: {{ attendee.user.city }} | Status: {{attendee.status}}</p>
+              </div>
+              {% if attendee.status == 'waitlisted' %}
+              <a href="{% url 'delete_attendee' attendee.pk %}" style="color: black;">Remove Waitlistee</a>
+              {% elif attendee.status == 'going' %}
+              <a href="{% url 'delete_attendee' attendee.pk %}" style="color: black;">Remove Attendee</a>
+              {% endif %}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>    
+    {% else %}
+      {% if event_registration != None %}
+        {% if event_registration.status == 'waitlisted' %}
+          {% if waitlist_pk != None %}
+            <a href="{% url 'remove_waitlist' pk=current_event.pk %}" style="color: black; background-color: rgba(255, 255, 255, 0.7);">Leave Waitlist</a>
+          {% endif %}
+        {% elif event_registration.status == 'going'%}
+          <a href="{% url 'cancel_registration' pk=current_event.pk %}" style="color: black;background-color: rgba(255, 255, 255, 0.7);">Leave Event</a>
+        {% else %}
+          {% if not full %}
+            <a href="{% url 'event_register' pk=current_event.pk %}" class="btn-primary">Register For Event</a>
+          {% else %}
+            <a href="{% url 'event_waitlist' pk=current_event.pk %}" class="btn-primary">Join Waitlist</a>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  {% endif %}
 </div>
 {% endblock %}

@@ -10,7 +10,7 @@
       <ul>
         {% for event in user_events %}
           <li>
-            <a href="{% url 'event_detail' event.id %}">
+            <a href="{% url 'event_detail' event.pk %}">
               <h3>{{ event.title }}</h3>
             </a><br>
             {{ event.description|truncatechars:100 }}<br>
@@ -24,12 +24,25 @@
     {% endif %}
   </div>
 
+  <div class="events-filter">
+      <form method="get" action="{% url 'project_homepage' %}">
+          <select name="user_filter" onchange="this.form.submit()">
+              <option value="">All Users</option>
+              {% for user in all_users %}
+                  <option value="{{ user.pk }}" {% if user.pk == selected_user_id %}selected{% endif %}>
+                      {{ user.first_name }} {{ user.last_name }}
+                  </option>
+              {% endfor %}
+          </select>
+      </form>
+  </div>
+
   <!-- All Other Events -->
   <div class="all-events-grid">
     {% if all_events %}
       {% for event in all_events %}
         <div class="event-card">
-          <a href="{% url 'event_detail' event.id %}">
+          <a href="{% url 'event_detail' event.pk %}">
             <h3>{{ event.title }}</h3>
           </a>
           <p>{{ event.description|truncatechars:100 }}</p>

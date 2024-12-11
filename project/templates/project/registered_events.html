@@ -1,0 +1,32 @@
+{% extends 'project/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="registered-events-container">
+    <h1 class="registered-events-heading">My Registered Events</h1>
+    
+    {% if user_events %}
+    <div class="registered-events-grid">
+        {% for event in user_events %}
+            {% if event.status == 'going' or event.status == 'waitlisted' %}
+            <div class="registered-event-card">
+                <h2 class="registered-event-title">{{ event.event.title }}</h2>
+                <p class="registered-event-date">
+                    <strong>Date:</strong> {{ event.event.date_time }}
+                </p>
+                <p class="registered-event-location">
+                    <strong>Location:</strong> {{ event.event.location }}
+                </p>
+                <p class="registered-event-description">
+                    {{ event.event.description|truncatewords:20 }}
+                </p>
+                <a href="{% url 'event_detail' event.event.id %}" class="btn-primary">View Details</a>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="no-registered-events">You haven't registered for any events yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

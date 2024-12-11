@@ -1,0 +1,12 @@
+<!-- blog/templates/blog/update_article_form.html -->
+{% extends 'project/base.html' %}
+{% block content %}
+<div class="form-container">
+    <form method="POST">
+        <h2>Your Public Profile for Eventful</h2>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn form-submit-btn">Update Profile</button>
+    </form>
+</div>
+{% endblock %}
